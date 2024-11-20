@@ -1,19 +1,20 @@
 CC=gcc
 CFLAGS=-O3 -g
- 
+
 TARGET=test mandel
- 
-all: $(TARGET)
- 
-libppm.so : ppm.c
-	$(CC) $(CFLAGS)  -fpic -shared $^ -o $@
- 
+
+# Construction de la bibliothèque partagée libppm.so
+libppm.so: ppm.c
+	$(CC) $(CFLAGS) -fpic -shared $^ -o $@
+
+# Construction de l'exécutable test
 test: main.c libppm.so
-	$(CC) $(CFLAGS) $(LDFLAGS) main.c  -lppm -L. -o $@
+	$(CC) $(CFLAGS) main.c -L. -lppm -o test
 
+# Construction de l'exécutable mandel
 mandel: mandel.c libppm.so
-	$(CC) $(CFLAGS) $(LDFLAGS) $< -lppm -L.  -o $@
- 
+	$(CC) $(CFLAGS) mandel.c -L. -lppm -o mandel
 
+# Nettoyage des fichiers générés
 clean:
 	rm -fr $(TARGET) *.so
