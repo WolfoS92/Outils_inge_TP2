@@ -43,4 +43,3 @@ static inline void ppm_image_setpixel(struct ppm_image *im, int x, int y,
 int ppm_image_dump(struct ppm_image *im, char *path);
 
 #endif /* PPM_H */
-
